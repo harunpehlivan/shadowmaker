@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <?php $IPATH = $_SERVER["DOCUMENT_ROOT"]."/assets/php/"; 
+    include($IPATH."meta.html"); ?>
+    <title>CSS Box Shadow Maker</title>
+      <!-- Facebook OpenGraph developers.facebook.com/docs/reference/opengraph/ -->
+      <meta property="og:type" content="article" />
+      <meta property="og:title" content="CSS Shadow Maker" />
+      <meta property="og:description" content="Design CSS box shadows and rounded corners interactively"
+      />
+      <meta property="og:url" content="https://alansimpson.me/html_css/tools/shadowmaker.html" />
+      <meta property="og:image" content="https://alansimpson.me/html_css/tools/shadowmakerog.jpg" />
+  
+      <!-- Twitter domain approval dev.twitter.com/docs/cards/validation/validator -->
+      <!-- For twitter, content is "summary" as shown, or "photo" or "player" (for video) -->
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:title" content="CSS Shadow Maker">
+      <meta name="twitter:description" content="Design CSS box shadows and rounded corners interactively">
+      <meta name="twitter:url" content="https://alansimpson.me/html_css/tools/shadowmaker.html">
+      <meta name="twitter:image" content="ttps://alansimpson.me/html_css/tools/shadowmakerog.jpg">
+      <!-- Shema.org microdata -->
+  
+      <meta itemprop="name" content="CSS Shadow Maker">
+      <meta itemprop="description" content="Design CSS box shadows and rounded corners interactively">
+      <meta itemprop="image" content="https://alansimpson.me/html_css/tools/shadowmakerog.jpg">
+    <style>
+             #left {
+            width: 450px;
+            float: left;
+        }
+        
+        #right {
+            margin-left: 450px;
+        }
+        
+        table#controls td:nth-child(1),
+        table.code td:nth-child(1) {
+            text-align: right;
+            background-color: #eee;
+            padding-right: 8px;
+        }
+        
+        #sample {
+            width: 300px;
+            height: 300px;
+            background-color: #d83b01;
+            border: solid 1px black;
+            margin: 100px auto 0 auto;
+        }
+        
+        .coderesult {
+            clear: both;
+            margin: 4em 0;
+        }
+        
+        #coderesult {
+            font-family:'Source Code Pro', monospace;
+            font-size: 150%;
+        }
+    </style>
+</head>
+
+<body>
+    <?php include($IPATH."headernav.html"); ?>
+    <article>
+            <h1>Interactive CSS Drop Shadow and Rounded Corners</h1>
+        <div id="left">
+   
+            <p>Drag the silders to design your drop shadow and corners.</p>
+            <table class="controls">
+                <tr>
+                    <td>X Offset</td>
+                    <td><input type="range" id="xrange" min="-30" max="30" oninput="showit()" onchange="showit()" value="10" /> </td>
+                </tr>
+                <tr>
+                    <td>Y Offset</td>
+                    <td><input type="range" id="yrange" min="-30" max="30" oninput="showit()" onchange="showit()" value="10" /> </td>
+                </tr>
+                <tr>
+                    <td>Blur</td>
+                    <td><input type="range" id="blur" min="0" max="50" oninput="showit()" onchange="showit()" value="10" /> </td>
+                </tr>
+                <tr>
+                    <td>Spread</td>
+                    <td><input type="range" id="spread" min="0" max="50" oninput="showit()" onchange="showit()" value="10" /> </td>
+                </tr>
+                <tr>
+                    <td>Opacity</td>
+                    <td><input type="range" id="opacity" min="0" max="1" step=".01" oninput="showit()" onchange="showit()" /> </td>
+                </tr>
+                <tr>
+                    <td>Corner Radius</td>
+                    <td><input type="range" id="radius" min="0" max="50" oninput="showit()" onchange="showit()" value="0" /> </td>
+                </tr>
+            </table>
+        </div>
+        <div id="right">
+            <div id="sample"></div>
+        </div>
+        <table class="coderesult">
+            <tr>
+                <td style="padding-right:12px;">Use this code in<br />your CSS style rule:</td>
+                <td id="coderesult"></td>
+            </tr>
+        </table>  
+    </article>
+    <?php include($IPATH."footer.html"); ?>
+    <script>
+        function showit() {
+            //This is the box to which styling is applied
+            var box = document.querySelector("#sample");
+            //Here we grab the values of all the slider controls.
+            var sx = document.getElementById("xrange").value + "px "
+            var sy = document.getElementById("yrange").value + "px "
+            var sb = document.getElementById("blur").value + "px "
+            var ss = document.getElementById("spread").value + "px "
+            var so = document.getElementById("opacity").value
+            var sr = document.getElementById("radius").value
+
+            //Here we apply the CSS box shadow styling to the box.
+            box.style.boxShadow = sx + sy + sb + ss + "rgba(0,0,0," + so + ")";
+            box.style.borderRadius = sr + "%"
+
+            //Here we put together the all the code to display on the page to copy/paste out of the page.
+            var scode = "box-shadow:" + sx + sy + sb + ss + "rgba(0,0,0," + so + ");\nborder-radius:" + sr + "%;";
+            document.getElementById("coderesult").innerText = scode;
+        }
+        //This executes when the page first opens to make the box drop shadow and radius match the default values of the slider controls.
+        window.onload = function() {
+            showit()
+        }
+    </script>
+</body>
+
+</html>
